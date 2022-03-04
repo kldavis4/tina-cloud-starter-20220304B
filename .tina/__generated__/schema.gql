@@ -52,10 +52,10 @@ type Query {
   getPostsList(before: String, after: String, first: Float, last: Float, filter: PostsFilter): PostsConnection!
   getGlobalDocument(relativePath: String): GlobalDocument!
   getGlobalList(before: String, after: String, first: Float, last: Float, filter: GlobalFilter): GlobalConnection!
-  getAuthorsDocument(relativePath: String): AuthorsDocument!
-  getAuthorsList(before: String, after: String, first: Float, last: Float, filter: AuthorsFilter): AuthorsConnection!
   getPagesDocument(relativePath: String): PagesDocument!
   getPagesList(before: String, after: String, first: Float, last: Float, filter: PagesFilter): PagesConnection!
+  getAuthorsDocument(relativePath: String): AuthorsDocument!
+  getAuthorsList(before: String, after: String, first: Float, last: Float, filter: AuthorsFilter): AuthorsConnection!
 }
 
 input StringFilter {
@@ -233,8 +233,8 @@ input PagesFilter {
 input DocumentFilter {
   posts: PostsFilter
   global: GlobalFilter
-  authors: AuthorsFilter
   pages: PagesFilter
+  authors: AuthorsFilter
 }
 
 type DocumentConnectionEdges {
@@ -260,7 +260,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, filter: DocumentFilter): DocumentConnection!
 }
 
-union DocumentNode = PostsDocument | GlobalDocument | AuthorsDocument | PagesDocument
+union DocumentNode = PostsDocument | GlobalDocument | PagesDocument | AuthorsDocument
 
 union PostsAuthorDocument = AuthorsDocument
 
@@ -355,31 +355,6 @@ type GlobalConnection implements Connection {
   edges: [GlobalConnectionEdges]
 }
 
-type Authors {
-  name: String
-  avatar: String
-}
-
-type AuthorsDocument implements Node & Document {
-  id: ID!
-  sys: SystemInfo!
-  data: Authors!
-  form: JSON!
-  values: JSON!
-  dataJSON: JSON!
-}
-
-type AuthorsConnectionEdges {
-  cursor: String
-  node: AuthorsDocument
-}
-
-type AuthorsConnection implements Connection {
-  pageInfo: PageInfo
-  totalCount: Float!
-  edges: [AuthorsConnectionEdges]
-}
-
 type PagesBlocksHeroActions {
   label: String
   type: String
@@ -455,6 +430,31 @@ type PagesConnection implements Connection {
   edges: [PagesConnectionEdges]
 }
 
+type Authors {
+  name: String
+  avatar: String
+}
+
+type AuthorsDocument implements Node & Document {
+  id: ID!
+  sys: SystemInfo!
+  data: Authors!
+  form: JSON!
+  values: JSON!
+  dataJSON: JSON!
+}
+
+type AuthorsConnectionEdges {
+  cursor: String
+  node: AuthorsDocument
+}
+
+type AuthorsConnection implements Connection {
+  pageInfo: PageInfo
+  totalCount: Float!
+  edges: [AuthorsConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
@@ -463,17 +463,17 @@ type Mutation {
   createPostsDocument(relativePath: String!, params: PostsMutation!): PostsDocument!
   updateGlobalDocument(relativePath: String!, params: GlobalMutation!): GlobalDocument!
   createGlobalDocument(relativePath: String!, params: GlobalMutation!): GlobalDocument!
-  updateAuthorsDocument(relativePath: String!, params: AuthorsMutation!): AuthorsDocument!
-  createAuthorsDocument(relativePath: String!, params: AuthorsMutation!): AuthorsDocument!
   updatePagesDocument(relativePath: String!, params: PagesMutation!): PagesDocument!
   createPagesDocument(relativePath: String!, params: PagesMutation!): PagesDocument!
+  updateAuthorsDocument(relativePath: String!, params: AuthorsMutation!): AuthorsDocument!
+  createAuthorsDocument(relativePath: String!, params: AuthorsMutation!): AuthorsDocument!
 }
 
 input DocumentMutation {
   posts: PostsMutation
   global: GlobalMutation
-  authors: AuthorsMutation
   pages: PagesMutation
+  authors: AuthorsMutation
 }
 
 input PostsMutation {
@@ -525,11 +525,6 @@ input GlobalMutation {
   header: GlobalHeaderMutation
   footer: GlobalFooterMutation
   theme: GlobalThemeMutation
-}
-
-input AuthorsMutation {
-  name: String
-  avatar: String
 }
 
 input PagesBlocksHeroActionsMutation {
@@ -590,6 +585,11 @@ input PagesBlocksMutation {
 
 input PagesMutation {
   blocks: [PagesBlocksMutation]
+}
+
+input AuthorsMutation {
+  name: String
+  avatar: String
 }
 
 schema {

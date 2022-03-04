@@ -47,11 +47,6 @@ fragment GlobalParts on Global {
   }
 }
 
-fragment AuthorsParts on Authors {
-  name
-  avatar
-}
-
 fragment PagesParts on Pages {
   blocks {
     __typename
@@ -97,4 +92,9 @@ fragment PagesParts on Pages {
       color
     }
   }
+}
+
+fragment AuthorsParts on Authors {
+  name
+  avatar
 }

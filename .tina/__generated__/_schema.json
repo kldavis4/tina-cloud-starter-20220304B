@@ -681,34 +681,6 @@
       ]
     },
     {
-      "label": "Authors",
-      "name": "authors",
-      "path": "content/authors",
-      "fields": [
-        {
-          "type": "string",
-          "label": "Name",
-          "name": "name",
-          "namespace": [
-            "authors",
-            "name"
-          ]
-        },
-        {
-          "type": "string",
-          "label": "Avatar",
-          "name": "avatar",
-          "namespace": [
-            "authors",
-            "avatar"
-          ]
-        }
-      ],
-      "namespace": [
-        "authors"
-      ]
-    },
-    {
       "label": "Pages",
       "name": "pages",
       "path": "content/pages",
@@ -1349,6 +1321,34 @@
       ],
       "namespace": [
         "pages"
+      ]
+    },
+    {
+      "label": "Authors",
+      "name": "authors",
+      "path": "content/authors",
+      "fields": [
+        {
+          "type": "string",
+          "label": "Name",
+          "name": "name",
+          "namespace": [
+            "authors",
+            "name"
+          ]
+        },
+        {
+          "type": "string",
+          "label": "Avatar",
+          "name": "avatar",
+          "namespace": [
+            "authors",
+            "avatar"
+          ]
+        }
+      ],
+      "namespace": [
+        "authors"
       ]
     }
   ]

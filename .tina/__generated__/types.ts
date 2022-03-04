@@ -71,10 +71,10 @@ export type Query = {
   getPostsList: PostsConnection;
   getGlobalDocument: GlobalDocument;
   getGlobalList: GlobalConnection;
-  getAuthorsDocument: AuthorsDocument;
-  getAuthorsList: AuthorsConnection;
   getPagesDocument: PagesDocument;
   getPagesList: PagesConnection;
+  getAuthorsDocument: AuthorsDocument;
+  getAuthorsList: AuthorsConnection;
 };
 
 
@@ -131,20 +131,6 @@ export type QueryGetGlobalListArgs = {
 };
 
 
-export type QueryGetAuthorsDocumentArgs = {
-  relativePath?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryGetAuthorsListArgs = {
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Float']>;
-  last?: InputMaybe<Scalars['Float']>;
-  filter?: InputMaybe<AuthorsFilter>;
-};
-
-
 export type QueryGetPagesDocumentArgs = {
   relativePath?: InputMaybe<Scalars['String']>;
 };
@@ -156,6 +142,20 @@ export type QueryGetPagesListArgs = {
   first?: InputMaybe<Scalars['Float']>;
   last?: InputMaybe<Scalars['Float']>;
   filter?: InputMaybe<PagesFilter>;
+};
+
+
+export type QueryGetAuthorsDocumentArgs = {
+  relativePath?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetAuthorsListArgs = {
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Float']>;
+  last?: InputMaybe<Scalars['Float']>;
+  filter?: InputMaybe<AuthorsFilter>;
 };
 
 export type StringFilter = {
@@ -333,8 +333,8 @@ export type PagesFilter = {
 export type DocumentFilter = {
   posts?: InputMaybe<PostsFilter>;
   global?: InputMaybe<GlobalFilter>;
-  authors?: InputMaybe<AuthorsFilter>;
   pages?: InputMaybe<PagesFilter>;
+  authors?: InputMaybe<AuthorsFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -372,7 +372,7 @@ export type CollectionDocumentsArgs = {
   filter?: InputMaybe<DocumentFilter>;
 };
 
-export type DocumentNode = PostsDocument | GlobalDocument | AuthorsDocument | PagesDocument;
+export type DocumentNode = PostsDocument | GlobalDocument | PagesDocument | AuthorsDocument;
 
 export type PostsAuthorDocument = AuthorsDocument;
 
@@ -481,35 +481,6 @@ export type GlobalConnection = Connection & {
   edges?: Maybe<Array<Maybe<GlobalConnectionEdges>>>;
 };
 
-export type Authors = {
-  __typename?: 'Authors';
-  name?: Maybe<Scalars['String']>;
-  avatar?: Maybe<Scalars['String']>;
-};
-
-export type AuthorsDocument = Node & Document & {
-  __typename?: 'AuthorsDocument';
-  id: Scalars['ID'];
-  sys: SystemInfo;
-  data: Authors;
-  form: Scalars['JSON'];
-  values: Scalars['JSON'];
-  dataJSON: Scalars['JSON'];
-};
-
-export type AuthorsConnectionEdges = {
-  __typename?: 'AuthorsConnectionEdges';
-  cursor?: Maybe<Scalars['String']>;
-  node?: Maybe<AuthorsDocument>;
-};
-
-export type AuthorsConnection = Connection & {
-  __typename?: 'AuthorsConnection';
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Float'];
-  edges?: Maybe<Array<Maybe<AuthorsConnectionEdges>>>;
-};
-
 export type PagesBlocksHeroActions = {
   __typename?: 'PagesBlocksHeroActions';
   label?: Maybe<Scalars['String']>;
@@ -597,6 +568,35 @@ export type PagesConnection = Connection & {
   edges?: Maybe<Array<Maybe<PagesConnectionEdges>>>;
 };
 
+export type Authors = {
+  __typename?: 'Authors';
+  name?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
+};
+
+export type AuthorsDocument = Node & Document & {
+  __typename?: 'AuthorsDocument';
+  id: Scalars['ID'];
+  sys: SystemInfo;
+  data: Authors;
+  form: Scalars['JSON'];
+  values: Scalars['JSON'];
+  dataJSON: Scalars['JSON'];
+};
+
+export type AuthorsConnectionEdges = {
+  __typename?: 'AuthorsConnectionEdges';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<AuthorsDocument>;
+};
+
+export type AuthorsConnection = Connection & {
+  __typename?: 'AuthorsConnection';
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Float'];
+  edges?: Maybe<Array<Maybe<AuthorsConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -606,10 +606,10 @@ export type Mutation = {
   createPostsDocument: PostsDocument;
   updateGlobalDocument: GlobalDocument;
   createGlobalDocument: GlobalDocument;
-  updateAuthorsDocument: AuthorsDocument;
-  createAuthorsDocument: AuthorsDocument;
   updatePagesDocument: PagesDocument;
   createPagesDocument: PagesDocument;
+  updateAuthorsDocument: AuthorsDocument;
+  createAuthorsDocument: AuthorsDocument;
 };
 
 
@@ -658,18 +658,6 @@ export type MutationCreateGlobalDocumentArgs = {
 };
 
 
-export type MutationUpdateAuthorsDocumentArgs = {
-  relativePath: Scalars['String'];
-  params: AuthorsMutation;
-};
-
-
-export type MutationCreateAuthorsDocumentArgs = {
-  relativePath: Scalars['String'];
-  params: AuthorsMutation;
-};
-
-
 export type MutationUpdatePagesDocumentArgs = {
   relativePath: Scalars['String'];
   params: PagesMutation;
@@ -681,11 +669,23 @@ export type MutationCreatePagesDocumentArgs = {
   params: PagesMutation;
 };
 
+
+export type MutationUpdateAuthorsDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: AuthorsMutation;
+};
+
+
+export type MutationCreateAuthorsDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: AuthorsMutation;
+};
+
 export type DocumentMutation = {
   posts?: InputMaybe<PostsMutation>;
   global?: InputMaybe<GlobalMutation>;
-  authors?: InputMaybe<AuthorsMutation>;
   pages?: InputMaybe<PagesMutation>;
+  authors?: InputMaybe<AuthorsMutation>;
 };
 
 export type PostsMutation = {
@@ -737,11 +737,6 @@ export type GlobalMutation = {
   header?: InputMaybe<GlobalHeaderMutation>;
   footer?: InputMaybe<GlobalFooterMutation>;
   theme?: InputMaybe<GlobalThemeMutation>;
-};
-
-export type AuthorsMutation = {
-  name?: InputMaybe<Scalars['String']>;
-  avatar?: InputMaybe<Scalars['String']>;
 };
 
 export type PagesBlocksHeroActionsMutation = {
@@ -804,6 +799,11 @@ export type PagesMutation = {
   blocks?: InputMaybe<Array<InputMaybe<PagesBlocksMutation>>>;
 };
 
+export type AuthorsMutation = {
+  name?: InputMaybe<Scalars['String']>;
+  avatar?: InputMaybe<Scalars['String']>;
+};
+
 export type LayoutQueryFragmentFragment = { __typename?: 'Query', getGlobalDocument: { __typename?: 'GlobalDocument', data: { __typename?: 'Global', header?: { __typename?: 'GlobalHeader', color?: string | null | undefined, icon?: { __typename?: 'GlobalHeaderIcon', name?: string | null | undefined, color?: string | null | undefined, style?: string | null | undefined } | null | undefined, nav?: Array<{ __typename?: 'GlobalHeaderNav', href?: string | null | undefined, label?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, footer?: { __typename?: 'GlobalFooter', color?: string | null | undefined, social?: { __typename?: 'GlobalFooterSocial', facebook?: string | null | undefined, twitter?: string | null | undefined, instagram?: string | null | undefined, github?: string | null | undefined } | null | undefined } | null | undefined, theme?: { __typename?: 'GlobalTheme', color?: string | null | undefined, icon?: string | null | undefined, font?: string | null | undefined, darkMode?: string | null | undefined } | null | undefined } } };
 
 export type PageQueryQueryVariables = Exact<{ [key: string]: never; }>;
@@ -829,9 +829,9 @@ export type PostsPartsFragment = { __typename?: 'Posts', title?: string | null |
 
 export type GlobalPartsFragment = { __typename?: 'Global', header?: { __typename: 'GlobalHeader', color?: string | null | undefined, icon?: { __typename: 'GlobalHeaderIcon', color?: string | null | undefined, style?: string | null | undefined, name?: string | null | undefined } | null | undefined, nav?: Array<{ __typename: 'GlobalHeaderNav', href?: string | null | undefined, label?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, footer?: { __typename: 'GlobalFooter', color?: string | null | undefined, social?: { __typename: 'GlobalFooterSocial', facebook?: string | null | undefined, twitter?: string | null | undefined, instagram?: string | null | undefined, github?: string | null | undefined } | null | undefined } | null | undefined, theme?: { __typename: 'GlobalTheme', color?: string | null | undefined, font?: string | null | undefined, icon?: string | null | undefined, darkMode?: string | null | undefined } | null | undefined };
 
-export type AuthorsPartsFragment = { __typename?: 'Authors', name?: string | null | undefined, avatar?: string | null | undefined };
-
 export type PagesPartsFragment = { __typename?: 'Pages', blocks?: Array<{ __typename: 'PagesBlocksHero', tagline?: string | null | undefined, headline?: string | null | undefined, text?: any | null | undefined, color?: string | null | undefined, actions?: Array<{ __typename: 'PagesBlocksHeroActions', label?: string | null | undefined, type?: string | null | undefined, icon?: boolean | null | undefined, link?: string | null | undefined } | null | undefined> | null | undefined, image?: { __typename: 'PagesBlocksHeroImage', src?: string | null | undefined, alt?: string | null | undefined } | null | undefined } | { __typename: 'PagesBlocksFeatures', color?: string | null | undefined, items?: Array<{ __typename: 'PagesBlocksFeaturesItems', title?: string | null | undefined, text?: string | null | undefined, icon?: { __typename: 'PagesBlocksFeaturesItemsIcon', color?: string | null | undefined, style?: string | null | undefined, name?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | { __typename: 'PagesBlocksContent', body?: any | null | undefined, color?: string | null | undefined } | { __typename: 'PagesBlocksTestimonial', quote?: string | null | undefined, author?: string | null | undefined, color?: string | null | undefined } | null | undefined> | null | undefined };
+
+export type AuthorsPartsFragment = { __typename?: 'Authors', name?: string | null | undefined, avatar?: string | null | undefined };
 
 export type GetPostsDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
@@ -857,18 +857,6 @@ export type GetGlobalListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetGlobalListQuery = { __typename?: 'Query', getGlobalList: { __typename?: 'GlobalConnection', totalCount: number, edges?: Array<{ __typename?: 'GlobalConnectionEdges', node?: { __typename?: 'GlobalDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Global', header?: { __typename: 'GlobalHeader', color?: string | null | undefined, icon?: { __typename: 'GlobalHeaderIcon', color?: string | null | undefined, style?: string | null | undefined, name?: string | null | undefined } | null | undefined, nav?: Array<{ __typename: 'GlobalHeaderNav', href?: string | null | undefined, label?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, footer?: { __typename: 'GlobalFooter', color?: string | null | undefined, social?: { __typename: 'GlobalFooterSocial', facebook?: string | null | undefined, twitter?: string | null | undefined, instagram?: string | null | undefined, github?: string | null | undefined } | null | undefined } | null | undefined, theme?: { __typename: 'GlobalTheme', color?: string | null | undefined, font?: string | null | undefined, icon?: string | null | undefined, darkMode?: string | null | undefined } | null | undefined } } | null | undefined } | null | undefined> | null | undefined } };
 
-export type GetAuthorsDocumentQueryVariables = Exact<{
-  relativePath: Scalars['String'];
-}>;
-
-
-export type GetAuthorsDocumentQuery = { __typename?: 'Query', getAuthorsDocument: { __typename?: 'AuthorsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Authors', name?: string | null | undefined, avatar?: string | null | undefined } } };
-
-export type GetAuthorsListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAuthorsListQuery = { __typename?: 'Query', getAuthorsList: { __typename?: 'AuthorsConnection', totalCount: number, edges?: Array<{ __typename?: 'AuthorsConnectionEdges', node?: { __typename?: 'AuthorsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Authors', name?: string | null | undefined, avatar?: string | null | undefined } } | null | undefined } | null | undefined> | null | undefined } };
-
 export type GetPagesDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
 }>;
@@ -880,6 +868,18 @@ export type GetPagesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPagesListQuery = { __typename?: 'Query', getPagesList: { __typename?: 'PagesConnection', totalCount: number, edges?: Array<{ __typename?: 'PagesConnectionEdges', node?: { __typename?: 'PagesDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Pages', blocks?: Array<{ __typename: 'PagesBlocksHero', tagline?: string | null | undefined, headline?: string | null | undefined, text?: any | null | undefined, color?: string | null | undefined, actions?: Array<{ __typename: 'PagesBlocksHeroActions', label?: string | null | undefined, type?: string | null | undefined, icon?: boolean | null | undefined, link?: string | null | undefined } | null | undefined> | null | undefined, image?: { __typename: 'PagesBlocksHeroImage', src?: string | null | undefined, alt?: string | null | undefined } | null | undefined } | { __typename: 'PagesBlocksFeatures', color?: string | null | undefined, items?: Array<{ __typename: 'PagesBlocksFeaturesItems', title?: string | null | undefined, text?: string | null | undefined, icon?: { __typename: 'PagesBlocksFeaturesItemsIcon', color?: string | null | undefined, style?: string | null | undefined, name?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | { __typename: 'PagesBlocksContent', body?: any | null | undefined, color?: string | null | undefined } | { __typename: 'PagesBlocksTestimonial', quote?: string | null | undefined, author?: string | null | undefined, color?: string | null | undefined } | null | undefined> | null | undefined } } | null | undefined } | null | undefined> | null | undefined } };
+
+export type GetAuthorsDocumentQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type GetAuthorsDocumentQuery = { __typename?: 'Query', getAuthorsDocument: { __typename?: 'AuthorsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Authors', name?: string | null | undefined, avatar?: string | null | undefined } } };
+
+export type GetAuthorsListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAuthorsListQuery = { __typename?: 'Query', getAuthorsList: { __typename?: 'AuthorsConnection', totalCount: number, edges?: Array<{ __typename?: 'AuthorsConnectionEdges', node?: { __typename?: 'AuthorsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Authors', name?: string | null | undefined, avatar?: string | null | undefined } } | null | undefined } | null | undefined> | null | undefined } };
 
 export const LayoutQueryFragmentFragmentDoc = gql`
     fragment LayoutQueryFragment on Query {
@@ -967,12 +967,6 @@ export const GlobalPartsFragmentDoc = gql`
   }
 }
     `;
-export const AuthorsPartsFragmentDoc = gql`
-    fragment AuthorsParts on Authors {
-  name
-  avatar
-}
-    `;
 export const PagesPartsFragmentDoc = gql`
     fragment PagesParts on Pages {
   blocks {
@@ -1019,6 +1013,12 @@ export const PagesPartsFragmentDoc = gql`
       color
     }
   }
+}
+    `;
+export const AuthorsPartsFragmentDoc = gql`
+    fragment AuthorsParts on Authors {
+  name
+  avatar
 }
     `;
 export const PageQueryDocument = gql`
@@ -1159,47 +1159,6 @@ export const GetGlobalListDocument = gql`
   }
 }
     ${GlobalPartsFragmentDoc}`;
-export const GetAuthorsDocumentDocument = gql`
-    query getAuthorsDocument($relativePath: String!) {
-  getAuthorsDocument(relativePath: $relativePath) {
-    sys {
-      filename
-      basename
-      breadcrumbs
-      path
-      relativePath
-      extension
-    }
-    id
-    data {
-      ...AuthorsParts
-    }
-  }
-}
-    ${AuthorsPartsFragmentDoc}`;
-export const GetAuthorsListDocument = gql`
-    query getAuthorsList {
-  getAuthorsList {
-    totalCount
-    edges {
-      node {
-        id
-        sys {
-          filename
-          basename
-          breadcrumbs
-          path
-          relativePath
-          extension
-        }
-        data {
-          ...AuthorsParts
-        }
-      }
-    }
-  }
-}
-    ${AuthorsPartsFragmentDoc}`;
 export const GetPagesDocumentDocument = gql`
     query getPagesDocument($relativePath: String!) {
   getPagesDocument(relativePath: $relativePath) {
@@ -1241,6 +1200,47 @@ export const GetPagesListDocument = gql`
   }
 }
     ${PagesPartsFragmentDoc}`;
+export const GetAuthorsDocumentDocument = gql`
+    query getAuthorsDocument($relativePath: String!) {
+  getAuthorsDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...AuthorsParts
+    }
+  }
+}
+    ${AuthorsPartsFragmentDoc}`;
+export const GetAuthorsListDocument = gql`
+    query getAuthorsList {
+  getAuthorsList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...AuthorsParts
+        }
+      }
+    }
+  }
+}
+    ${AuthorsPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -1265,17 +1265,17 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
     getGlobalList(variables?: GetGlobalListQueryVariables, options?: C): Promise<{data: GetGlobalListQuery, variables: GetGlobalListQueryVariables, query: string}> {
         return requester<{data: GetGlobalListQuery, variables: GetGlobalListQueryVariables, query: string}, GetGlobalListQueryVariables>(GetGlobalListDocument, variables, options);
       },
-    getAuthorsDocument(variables: GetAuthorsDocumentQueryVariables, options?: C): Promise<{data: GetAuthorsDocumentQuery, variables: GetAuthorsDocumentQueryVariables, query: string}> {
-        return requester<{data: GetAuthorsDocumentQuery, variables: GetAuthorsDocumentQueryVariables, query: string}, GetAuthorsDocumentQueryVariables>(GetAuthorsDocumentDocument, variables, options);
-      },
-    getAuthorsList(variables?: GetAuthorsListQueryVariables, options?: C): Promise<{data: GetAuthorsListQuery, variables: GetAuthorsListQueryVariables, query: string}> {
-        return requester<{data: GetAuthorsListQuery, variables: GetAuthorsListQueryVariables, query: string}, GetAuthorsListQueryVariables>(GetAuthorsListDocument, variables, options);
-      },
     getPagesDocument(variables: GetPagesDocumentQueryVariables, options?: C): Promise<{data: GetPagesDocumentQuery, variables: GetPagesDocumentQueryVariables, query: string}> {
         return requester<{data: GetPagesDocumentQuery, variables: GetPagesDocumentQueryVariables, query: string}, GetPagesDocumentQueryVariables>(GetPagesDocumentDocument, variables, options);
       },
     getPagesList(variables?: GetPagesListQueryVariables, options?: C): Promise<{data: GetPagesListQuery, variables: GetPagesListQueryVariables, query: string}> {
         return requester<{data: GetPagesListQuery, variables: GetPagesListQueryVariables, query: string}, GetPagesListQueryVariables>(GetPagesListDocument, variables, options);
+      },
+    getAuthorsDocument(variables: GetAuthorsDocumentQueryVariables, options?: C): Promise<{data: GetAuthorsDocumentQuery, variables: GetAuthorsDocumentQueryVariables, query: string}> {
+        return requester<{data: GetAuthorsDocumentQuery, variables: GetAuthorsDocumentQueryVariables, query: string}, GetAuthorsDocumentQueryVariables>(GetAuthorsDocumentDocument, variables, options);
+      },
+    getAuthorsList(variables?: GetAuthorsListQueryVariables, options?: C): Promise<{data: GetAuthorsListQuery, variables: GetAuthorsListQueryVariables, query: string}> {
+        return requester<{data: GetAuthorsListQuery, variables: GetAuthorsListQueryVariables, query: string}, GetAuthorsListQueryVariables>(GetAuthorsListDocument, variables, options);
       }
     };
   }
