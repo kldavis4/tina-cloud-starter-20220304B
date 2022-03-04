@@ -679,23 +679,6 @@ export default defineSchema({
       ],
     },
     {
-      label: "Authors",
-      name: "authors",
-      path: "content/authors",
-      fields: [
-        {
-          type: "string",
-          label: "Name",
-          name: "name",
-        },
-        {
-          type: "string",
-          label: "Avatar",
-          name: "avatar",
-        },
-      ],
-    },
-    {
       label: "Pages",
       name: "pages",
       path: "content/pages",
@@ -711,6 +694,23 @@ export default defineSchema({
             contentBlockSchema,
             testimonialBlockSchema,
           ],
+        },
+      ],
+    },
+    {
+      label: "Authors",
+      name: "authors",
+      path: "content/authors",
+      fields: [
+        {
+          type: "string",
+          label: "Name",
+          name: "name",
+        },
+        {
+          type: "string",
+          label: "Avatar",
+          name: "avatar",
         },
       ],
     },
